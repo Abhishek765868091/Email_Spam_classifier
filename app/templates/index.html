@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spam Email Classifier Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Spam Email Classifier ⚡</h1>
+
+        <!-- Upload Section -->
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <textarea name="email" placeholder="Paste email text here..."></textarea><br>
+            <input type="file" name="file"><br>
+            <button type="submit">Classify</button>
+        </form>
+
+        <!-- Prediction Result -->
+        {% if prediction_text %}
+        <div class="result">
+            <h2>Result:</h2>
+            <p>{{ prediction_text }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Risk Analysis Chart -->
+        {% if chart_json %}
+        <div id="riskChart"></div>
+        <script>
+            renderRiskChart({{ chart_json | safe }});
+        </script>
+        {% endif %}
+    </div>
+    <div class="footer">Powered by PyTorch + Flask + Sklearn | Developed by Abhishek</div>
+</body>
+</html>
