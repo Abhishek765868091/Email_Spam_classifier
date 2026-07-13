@@ -14,13 +14,13 @@
         <!-- Upload Section -->
         <form action="/predict" method="post" enctype="multipart/form-data">
             <textarea name="email" placeholder="Paste email text here..."></textarea><br>
-            <input type="file" name="file"><br>
+            <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg"><br>
             <button type="submit">Classify</button>
         </form>
 
         <!-- Prediction Result -->
         {% if prediction_text %}
-        <div class="result">
+        <div class="result {{ 'error' if ('not available' in prediction_text or 'Could not' in prediction_text or 'Unsupported' in prediction_text or 'No text found' in prediction_text) else '' }}">
             <h2>Result:</h2>
             <p>{{ prediction_text }}</p>
         </div>
